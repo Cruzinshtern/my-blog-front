@@ -15,11 +15,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UsersComponent
+    UsersComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -35,6 +38,7 @@ import {FormsModule} from '@angular/forms';
     MatPaginatorModule,
     MatInputModule,
     FormsModule,
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

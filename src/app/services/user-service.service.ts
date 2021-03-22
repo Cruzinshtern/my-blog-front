@@ -33,6 +33,10 @@ export class UserService {
     private http: HttpClient
   ) { }
 
+  findOne(id: number): Observable<User> {
+    return this.http.get(this.USERS_URL + '/' + id);
+  }
+
   findAll(page: number, size: number): Observable<UserData> {
     let params = new HttpParams();
     params = params.append('page', String(page));
