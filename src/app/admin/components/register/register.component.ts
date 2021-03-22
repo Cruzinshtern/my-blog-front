@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {Router} from '@angular/router';
+import {CustomValidators} from '../../../validators/validators';
 
 @Component({
   selector: 'app-register',
@@ -30,9 +31,11 @@ export class RegisterComponent implements OnInit {
       password: [null, [
         Validators.required,
         Validators.minLength(3),
-        // CustomValidators.passwordContainsNumber
+        CustomValidators.passwordContainsNumber
       ]],
       passwordConfirm: [null, [Validators.required]],
+    }, {
+      validators: CustomValidators.passwordMatch
     });
   }
 
