@@ -1,8 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthenticationService, User} from '../../services/authentication.service';
 import {UserService} from '../../services/user-service.service';
-import {switchMap, tap} from 'rxjs/operators';
+import {catchError, map, switchMap, tap} from 'rxjs/operators';
+import {HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http';
+import {of} from 'rxjs';
+
+export interface File {
+  data: any;
+  progress: number;
+  inProgress: boolean;
+}
 
 @Component({
   selector: 'app-update-user-profile',
@@ -10,6 +18,15 @@ import {switchMap, tap} from 'rxjs/operators';
   styleUrls: ['./update-user-profile.component.scss']
 })
 export class UpdateUserProfileComponent implements OnInit {
+
+  @ViewChild('fileUpload', { static: false })
+  fileUpload: ElementRef;
+
+  file: File = {
+    data: null,
+    inProgress: false,
+    progress: 0,
+  };
 
   form: FormGroup;
 
@@ -23,7 +40,8 @@ export class UpdateUserProfileComponent implements OnInit {
     this.form = this.fb.group({
       id: [{ value: null, disabled: true }, [Validators.required]],
       name: [null, [Validators.required]],
-      username: [null, [Validators.required]]
+      username: [null, [Validators.required]],
+      profileImage: [null],
     });
 
     this.authService.getUserId().pipe(
@@ -32,11 +50,53 @@ export class UpdateUserProfileComponent implements OnInit {
           this.form.patchValue({
             id: user.id,
             name: user.name,
-            username: user.username
+            username: user.username,
+            profileImage: user.profileImage,
           });
         })
       ))
     ).subscribe();
+  }
+
+  onClick() {
+    const fileInput = this.fileUpload.nativeElement;
+    fileInput.click();
+    fileInput.onchange = () => {
+      this.file = {
+        data: fileInput.files[0],
+        inProgress: false,
+        progress: 0,
+      };
+      this.fileUpload.nativeElement.value = '';
+      this.uploadFile();
+    }
+  }
+
+  uploadFile() {
+    const formData = new FormData();
+    formData.append('file', this.file.data);
+    this.file.inProgress = true;
+    this.userService.uploadProfileImage(formData).pipe(
+      map((event) => {
+        switch (event.type) {
+          case HttpEventType.UploadProgress:
+            this.file.progress = Math.round(event.loaded * 100 / event.total);
+            break;
+          case HttpEventType.Response:
+            return event;
+        }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        this.file.inProgress = false;
+        return of('Upload failed');
+      })
+    ).subscribe(
+      (event: any) => {
+        if(typeof (event) === 'object') {
+          this.form.patchValue({ profileImage: event.body.profileImage })
+        }
+      }
+    )
   }
 
   update() {

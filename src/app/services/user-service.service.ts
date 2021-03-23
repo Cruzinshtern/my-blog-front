@@ -64,4 +64,11 @@ export class UserService {
     );
   }
 
+  uploadProfileImage(formData: FormData): Observable<any> {
+    return this.http.post<FormData>(this.USERS_URL + '/upload', formData, {
+      reportProgress: true,
+      observe: 'events'
+    })
+  }
+
 }
