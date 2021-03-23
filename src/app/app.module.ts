@@ -14,7 +14,7 @@ import { UsersComponent } from './components/users/users.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import {MatInputModule} from '@angular/material/input';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import {MatCardModule} from '@angular/material/card';
 import { UpdateUserProfileComponent } from './components/update-user-profile/update-user-profile.component';
@@ -43,6 +43,7 @@ import {JwtInterceptor} from './interceptors/jwt.interceptor';
     MatInputModule,
     FormsModule,
     MatCardModule,
+    ReactiveFormsModule,
   ],
   providers: [
     JwtHelperService,

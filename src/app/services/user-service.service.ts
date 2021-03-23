@@ -48,6 +48,10 @@ export class UserService {
     );
   }
 
+  updateOne(user): Observable<User> {
+    return this.http.put(this.USERS_URL + '/' + user.id, user);
+  }
+
   paginateByName(page: number, size: number, username: string): Observable<UserData> {
     let params = new HttpParams();
     params = params.append('page', String(page));
