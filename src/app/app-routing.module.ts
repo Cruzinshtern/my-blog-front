@@ -4,6 +4,8 @@ import {LoginComponent} from './admin/components/login/login.component';
 import {RegisterComponent} from './admin/components/register/register.component';
 import { UsersComponent } from './components/users/users.component';
 import {UserProfileComponent} from './components/user-profile/user-profile.component';
+import {UpdateUserProfileComponent} from './components/update-user-profile/update-user-profile.component';
+import {AuthGuard} from './guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -30,6 +32,11 @@ const routes: Routes = [
         component: UserProfileComponent
       }
     ]
+  },
+  {
+    path: 'update-profile',
+    component: UpdateUserProfileComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
