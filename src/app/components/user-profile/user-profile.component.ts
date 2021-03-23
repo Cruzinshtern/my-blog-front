@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {Subscription} from 'rxjs';
-import {User} from '../../services/authentication.service';
+import { User } from '../../models/user.interface';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../../services/user-service.service';
 import {map} from 'rxjs/operators';

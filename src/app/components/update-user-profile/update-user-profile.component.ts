@@ -1,10 +1,11 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthenticationService, User} from '../../services/authentication.service';
-import {UserService} from '../../services/user-service.service';
-import {catchError, map, switchMap, tap} from 'rxjs/operators';
-import {HttpErrorResponse, HttpEvent, HttpEventType} from '@angular/common/http';
-import {of} from 'rxjs';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from '../../services/authentication.service';
+import { UserService } from '../../services/user-service.service';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
+import { of } from 'rxjs';
+import { User } from '../../models/user.interface';
 
 export interface File {
   data: any;
