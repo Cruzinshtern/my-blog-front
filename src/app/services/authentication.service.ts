@@ -35,6 +35,10 @@ export class AuthenticationService {
     );
   }
 
+  logout() {
+    localStorage.removeItem(JWT_TOKEN_KEY);
+  }
+
   register(user) {
     return this.http.post<any>(this.REGISTER_URL, user).pipe(
       map(registeredUser => registeredUser)
