@@ -15,6 +15,10 @@ export class BlogService {
     private http: HttpClient
   ) { }
 
+  findOne(id: number): Observable<BlogEntry> {
+    return this.http.get<BlogEntry>(this.BLOG_ENTRIES_URL + `/${id}`);
+  }
+
   indexAll(page: number, limit: number): Observable<BlogEntriesPageable> {
     let params = new HttpParams();
 
